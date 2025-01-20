@@ -8,22 +8,27 @@ public class Kiwi {
                 + "|   <   | | \\ \\    / / | |\n"
                 + "| |\\ \\  | |  \\ \\/\\/ /  | |\n"
                 + "|_| \\_\\ |_|   \\_/\\_/   |_|\n";
-        String greetingMessage = "Bonjour!\nWhat should I do now?\n";
-        String byeMessage = "Au revoir!\nI'm happy to serve you today. See you again soon!";
+        String greetingMessage = "Bonjour!\n    What should I do now?";
+        String byeMessage = "Au revoir!\n    I'm happy to serve you today. See you again soon!";
 
         System.out.println(logo);
-        System.out.println(greetingMessage);
+        System.out.println("    " + greetingMessage);
+        System.out.println("    ______________________________");
 
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
 
         while (scanner.hasNextLine()) {
             userInput = scanner.nextLine();
+            System.out.println("    ______________________________");
+
             if (userInput.equals("bye")) {
-                System.out.println(byeMessage);
+                System.out.println("    " + byeMessage);
                 break;
             }
-            System.out.println(userInput + "\n");
+
+            System.out.println(userInput);
+            System.out.println("    ______________________________");
         }
 
         scanner.close();
