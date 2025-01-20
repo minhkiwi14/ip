@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Kiwi {
     public static void main(String[] args) {
         String logo = " _   __  _              _    __     __\n"
@@ -11,6 +13,19 @@ public class Kiwi {
 
         System.out.println(logo);
         System.out.println(greetingMessage);
-        System.out.println(byeMessage);
+
+        Scanner scanner = new Scanner(System.in);
+        String userInput = "";
+
+        while (scanner.hasNextLine()) {
+            userInput = scanner.nextLine();
+            if (userInput.equals("bye")) {
+                System.out.println(byeMessage);
+                break;
+            }
+            System.out.println(userInput + "\n");
+        }
+
+        scanner.close();
     }
 }
