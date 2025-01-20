@@ -6,6 +6,11 @@ public class Kiwi {
                 + "|   <   | | \\ \\    / / | |\n"
                 + "| |\\ \\  | |  \\ \\/\\/ /  | |\n"
                 + "|_| \\_\\ |_|   \\_/\\_/   |_|\n";
+        String greetingMessage = "Bonjour!\nWhat should I do now?\n";
+        String byeMessage = "Au revoir!\nI'm happy to serve you today. See you again soon!";
+
         System.out.println(logo);
+        System.out.println(greetingMessage);
+        System.out.println(byeMessage);
     }
 }
