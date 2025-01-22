@@ -8,7 +8,7 @@ public class Kiwi {
      * @param array The array of strings.
      * @param numOfItems The number of items in the array.
      */
-    public static void printList(String[] array, int numOfItems) {
+    public static void printList(Task[] array, int numOfItems) {
         for (int i = 0; i < numOfItems; i++) {
             System.out.println("    " + (i + 1) + ". " + array[i]);
         }
@@ -32,7 +32,7 @@ public class Kiwi {
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
 
-        String[] taskList = new String[100];
+        Task[] taskList = new Task[100];
         int numOfItems = 0;
 
         while (scanner.hasNextLine()) {
@@ -46,9 +46,19 @@ public class Kiwi {
 
             if (userInput.equals("list")) {
                 printList(taskList, numOfItems);
+            } else if (userInput.startsWith("mark")) {
+                String[] words = userInput.split(" ");
+                int index = Integer.parseInt(words[1]);
+                taskList[index - 1].markAsDone();
+                System.out.println("    Congratulations on having done it!\n    " + taskList[index - 1]);
+            } else if (userInput.startsWith("unmark")) {
+                String[] words = userInput.split(" ");
+                int index = Integer.parseInt(words[1]);
+                taskList[index - 1].markAsUndone();
+                System.out.println("    Uh oh! Do it soon!\n    " + taskList[index - 1]);
             } else {
-                taskList[numOfItems] = userInput;
-                numOfItems++;
+                Task task = new Task(userInput);
+                taskList[numOfItems++] = task;
                 System.out.println("    added: " + userInput);
                 System.out.println("    ______________________________");
             }
