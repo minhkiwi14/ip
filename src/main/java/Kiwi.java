@@ -47,19 +47,44 @@ public class Kiwi {
             if (userInput.equals("list")) {
                 printList(taskList, numOfItems);
             } else if (userInput.startsWith("mark")) {
-                String[] words = userInput.split(" ");
-                int index = Integer.parseInt(words[1]);
+                String[] splitUserInput = userInput.split(" ");
+                int index = Integer.parseInt(splitUserInput[1]);
                 taskList[index - 1].markAsDone();
                 System.out.println("    Congratulations on having done it!\n    " + taskList[index - 1]);
             } else if (userInput.startsWith("unmark")) {
-                String[] words = userInput.split(" ");
-                int index = Integer.parseInt(words[1]);
+                String[] splitUserInput = userInput.split(" ");
+                int index = Integer.parseInt(splitUserInput[1]);
                 taskList[index - 1].markAsUndone();
                 System.out.println("    Uh oh! Do it soon!\n    " + taskList[index - 1]);
-            } else {
-                Task task = new Task(userInput);
-                taskList[numOfItems++] = task;
-                System.out.println("    added: " + userInput);
+            } else if (userInput.startsWith("todo")) {
+                String[] splitUserInput = userInput.split("todo");
+                String task = splitUserInput[1].strip();
+                Task todoTask = new Todo(task);
+                taskList[numOfItems++] = todoTask;
+                System.out.println("    added: " + task);
+                System.out.println("    ______________________________");
+            } else if (userInput.startsWith("deadline")) {
+                String[] splitUserInput = userInput.split("deadline");
+                String deadlineDetails = splitUserInput[1].strip();
+                String[] splitDeadlineDetails = deadlineDetails.split("/by");
+                String task = splitDeadlineDetails[0].strip();
+                String deadline = splitDeadlineDetails[1].strip();
+                Task deadlineTask = new Deadline(task, deadline);
+                taskList[numOfItems++] = deadlineTask;
+                System.out.println("    added: " + deadlineTask);
+                System.out.println("    ______________________________");
+            } else if (userInput.startsWith("event")) {
+                String[] splitUserInput = userInput.split("event");
+                String eventDetails = splitUserInput[1].strip();
+                String[] splitEventDetails = eventDetails.split("/from");
+                String task = splitEventDetails[0].strip();
+                String period = splitEventDetails[1].strip();
+                String[] startEndTime = period.split("/to");
+                String startTime = startEndTime[0].strip();
+                String endTime = startEndTime[1].strip();
+                Task eventTask = new Event(task, startTime, endTime);
+                taskList[numOfItems++] = eventTask;
+                System.out.println("    added: " + eventTask);
                 System.out.println("    ______________________________");
             }
         }
