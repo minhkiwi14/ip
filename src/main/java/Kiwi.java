@@ -16,6 +16,36 @@ public class Kiwi {
         System.out.println("    ______________________________");
     }
 
+    public static Task getTodo(String userInput) {
+        String[] splitUserInput = userInput.split("todo");
+        String task = splitUserInput[1].strip();
+        Task todoTask = new Todo(task);
+        return todoTask;
+    }
+
+    public static Task getDeadline(String userInput) {
+        String[] splitUserInput = userInput.split("deadline");
+        String deadlineDetails = splitUserInput[1].strip();
+        String[] splitDeadlineDetails = deadlineDetails.split("/by");
+        String task = splitDeadlineDetails[0].strip();
+        String deadline = splitDeadlineDetails[1].strip();
+        Task deadlineTask = new Deadline(task, deadline);
+        return deadlineTask;
+    }
+
+    public static Task getEvent(String userInput) {
+        String[] splitUserInput = userInput.split("event");
+        String eventDetails = splitUserInput[1].strip();
+        String[] splitEventDetails = eventDetails.split("/from");
+        String task = splitEventDetails[0].strip();
+        String period = splitEventDetails[1].strip();
+        String[] startEndTime = period.split("/to");
+        String startTime = startEndTime[0].strip();
+        String endTime = startEndTime[1].strip();
+        Task eventTask = new Event(task, startTime, endTime);
+        return eventTask;
+    }
+
     public static void main(String[] args) {
         String logo = " _   __  _              _    __     __\n"
                 + "| | / / |_|            |_|  /  \\   /  \\\n"
@@ -58,34 +88,19 @@ public class Kiwi {
                 taskList[index - 1].markAsUndone();
                 System.out.println("    Uh oh! Do it soon!\n    " + taskList[index - 1]);
             } else if (userInput.startsWith("todo")) {
-                String[] splitUserInput = userInput.split("todo");
-                String task = splitUserInput[1].strip();
-                Task todoTask = new Todo(task);
+                Task todoTask = getTodo(userInput);
                 taskList[numOfItems++] = todoTask;
                 System.out.println("    Got it! I've added your task:\n    " + todoTask);
                 System.out.println("    Now you have " + numOfItems + " tasks in this list.");
                 System.out.println("    ______________________________");
             } else if (userInput.startsWith("deadline")) {
-                String[] splitUserInput = userInput.split("deadline");
-                String deadlineDetails = splitUserInput[1].strip();
-                String[] splitDeadlineDetails = deadlineDetails.split("/by");
-                String task = splitDeadlineDetails[0].strip();
-                String deadline = splitDeadlineDetails[1].strip();
-                Task deadlineTask = new Deadline(task, deadline);
+                Task deadlineTask = getDeadline(userInput);
                 taskList[numOfItems++] = deadlineTask;
                 System.out.println("    Got it! I've added your task:\n    " + deadlineTask);
                 System.out.println("    Now you have " + numOfItems + " tasks in this list.");
                 System.out.println("    ______________________________");
             } else if (userInput.startsWith("event")) {
-                String[] splitUserInput = userInput.split("event");
-                String eventDetails = splitUserInput[1].strip();
-                String[] splitEventDetails = eventDetails.split("/from");
-                String task = splitEventDetails[0].strip();
-                String period = splitEventDetails[1].strip();
-                String[] startEndTime = period.split("/to");
-                String startTime = startEndTime[0].strip();
-                String endTime = startEndTime[1].strip();
-                Task eventTask = new Event(task, startTime, endTime);
+                Task eventTask = getEvent(userInput);
                 taskList[numOfItems++] = eventTask;
                 System.out.println("    Got it! I've added your task:\n    " + eventTask);
                 System.out.println("    Now you have " + numOfItems + " tasks in this list.");
