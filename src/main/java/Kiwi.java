@@ -16,34 +16,46 @@ public class Kiwi {
         System.out.println("    ______________________________");
     }
 
-    public static Task getTodo(String userInput) {
-        String[] splitUserInput = userInput.split("todo");
-        String task = splitUserInput[1].strip();
-        Task todoTask = new Todo(task);
-        return todoTask;
+    public static Task getTodo(String userInput) throws KiwiException {
+        try {
+            String[] splitUserInput = userInput.split("todo");
+            String task = splitUserInput[1].strip();
+            Task todoTask = new Todo(task);
+            return todoTask;
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KiwiException("The description of the task cannot be empty.");
+        }
     }
 
-    public static Task getDeadline(String userInput) {
-        String[] splitUserInput = userInput.split("deadline");
-        String deadlineDetails = splitUserInput[1].strip();
-        String[] splitDeadlineDetails = deadlineDetails.split("/by");
-        String task = splitDeadlineDetails[0].strip();
-        String deadline = splitDeadlineDetails[1].strip();
-        Task deadlineTask = new Deadline(task, deadline);
-        return deadlineTask;
+    public static Task getDeadline(String userInput) throws KiwiException {
+        try {
+            String[] splitUserInput = userInput.split("deadline");
+            String deadlineDetails = splitUserInput[1].strip();
+            String[] splitDeadlineDetails = deadlineDetails.split("/by");
+            String task = splitDeadlineDetails[0].strip();
+            String deadline = splitDeadlineDetails[1].strip();
+            Task deadlineTask = new Deadline(task, deadline);
+            return deadlineTask;
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KiwiException("The description of the task cannot be empty.");
+        }
     }
 
-    public static Task getEvent(String userInput) {
-        String[] splitUserInput = userInput.split("event");
-        String eventDetails = splitUserInput[1].strip();
-        String[] splitEventDetails = eventDetails.split("/from");
-        String task = splitEventDetails[0].strip();
-        String period = splitEventDetails[1].strip();
-        String[] startEndTime = period.split("/to");
-        String startTime = startEndTime[0].strip();
-        String endTime = startEndTime[1].strip();
-        Task eventTask = new Event(task, startTime, endTime);
-        return eventTask;
+    public static Task getEvent(String userInput) throws KiwiException {
+        try {
+            String[] splitUserInput = userInput.split("event");
+            String eventDetails = splitUserInput[1].strip();
+            String[] splitEventDetails = eventDetails.split("/from");
+            String task = splitEventDetails[0].strip();
+            String period = splitEventDetails[1].strip();
+            String[] startEndTime = period.split("/to");
+            String startTime = startEndTime[0].strip();
+            String endTime = startEndTime[1].strip();
+            Task eventTask = new Event(task, startTime, endTime);
+            return eventTask;
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new KiwiException("The description of the task cannot be empty.");
+        }
     }
 
     public static void main(String[] args) {
@@ -79,31 +91,52 @@ public class Kiwi {
                 printList(taskList, numOfItems);
             } else if (userInput.startsWith("mark")) {
                 String[] splitUserInput = userInput.split(" ");
-                int index = Integer.parseInt(splitUserInput[1]);
-                taskList[index - 1].markAsDone();
-                System.out.println("    Congratulations on having done it!\n    " + taskList[index - 1]);
+                int index = Integer.parseInt(splitUserInput[1]) - 1;
+                taskList[index].markAsDone();
+                System.out.println("    Congratulations on having done it!\n    " + taskList[index]);
+                System.out.println("    ______________________________");
             } else if (userInput.startsWith("unmark")) {
                 String[] splitUserInput = userInput.split(" ");
-                int index = Integer.parseInt(splitUserInput[1]);
-                taskList[index - 1].markAsUndone();
-                System.out.println("    Uh oh! Do it soon!\n    " + taskList[index - 1]);
+                int index = Integer.parseInt(splitUserInput[1]) - 1;
+                taskList[index].markAsUndone();
+                System.out.println("    Uh oh! Do it soon!\n    " + taskList[index]);
+                System.out.println("    ______________________________");
             } else if (userInput.startsWith("todo")) {
-                Task todoTask = getTodo(userInput);
-                taskList[numOfItems++] = todoTask;
-                System.out.println("    Got it! I've added your task:\n    " + todoTask);
-                System.out.println("    Now you have " + numOfItems + " tasks in this list.");
+                try {
+                    Task todoTask = getTodo(userInput);
+                    taskList[numOfItems++] = todoTask;
+                    System.out.println("    Got it! I've added your task:\n    " + todoTask);
+                    System.out.println("    Now you have " + numOfItems + " tasks in this list.");
+                } catch (KiwiException exception) {
+                    System.out.println("    " + exception.getMessage());
+                }
                 System.out.println("    ______________________________");
             } else if (userInput.startsWith("deadline")) {
-                Task deadlineTask = getDeadline(userInput);
-                taskList[numOfItems++] = deadlineTask;
-                System.out.println("    Got it! I've added your task:\n    " + deadlineTask);
-                System.out.println("    Now you have " + numOfItems + " tasks in this list.");
+                try {
+                    Task deadlineTask = getDeadline(userInput);
+                    taskList[numOfItems++] = deadlineTask;
+                    System.out.println("    Got it! I've added your task:\n    " + deadlineTask);
+                    System.out.println("    Now you have " + numOfItems + " tasks in this list.");
+                } catch (KiwiException exception) {
+                    System.out.println("    " + exception.getMessage());
+                }
                 System.out.println("    ______________________________");
             } else if (userInput.startsWith("event")) {
-                Task eventTask = getEvent(userInput);
-                taskList[numOfItems++] = eventTask;
-                System.out.println("    Got it! I've added your task:\n    " + eventTask);
-                System.out.println("    Now you have " + numOfItems + " tasks in this list.");
+                try {
+                    Task eventTask = getEvent(userInput);
+                    taskList[numOfItems++] = eventTask;
+                    System.out.println("    Got it! I've added your task:\n    " + eventTask);
+                    System.out.println("    Now you have " + numOfItems + " tasks in this list.");
+                } catch (KiwiException exception) {
+                    System.out.println("    " + exception.getMessage());
+                }
+                System.out.println("    ______________________________");
+            } else {
+                try {
+                    throw new KiwiException("This is not a valid command. Please try again!");
+                } catch (KiwiException exception) {
+                    System.out.println("    " + exception.getMessage());
+                }
                 System.out.println("    ______________________________");
             }
         }
