@@ -5,10 +5,11 @@ public class Kiwi {
      * Prints each item in the provided array with numbering, indented by 4 spaces.
      * After printing all items, it prints a separator line.
      *
-     * @param array The array of strings.
+     * @param array      The array of strings.
      * @param numOfItems The number of items in the array.
      */
     public static void printList(Task[] array, int numOfItems) {
+        System.out.println("    Here are your tasks:");
         for (int i = 0; i < numOfItems; i++) {
             System.out.println("    " + (i + 1) + ". " + array[i]);
         }
@@ -61,7 +62,8 @@ public class Kiwi {
                 String task = splitUserInput[1].strip();
                 Task todoTask = new Todo(task);
                 taskList[numOfItems++] = todoTask;
-                System.out.println("    added: " + task);
+                System.out.println("    Got it! I've added your task:\n    " + todoTask);
+                System.out.println("    Now you have " + numOfItems + " tasks in this list.");
                 System.out.println("    ______________________________");
             } else if (userInput.startsWith("deadline")) {
                 String[] splitUserInput = userInput.split("deadline");
@@ -71,7 +73,8 @@ public class Kiwi {
                 String deadline = splitDeadlineDetails[1].strip();
                 Task deadlineTask = new Deadline(task, deadline);
                 taskList[numOfItems++] = deadlineTask;
-                System.out.println("    added: " + deadlineTask);
+                System.out.println("    Got it! I've added your task:\n    " + deadlineTask);
+                System.out.println("    Now you have " + numOfItems + " tasks in this list.");
                 System.out.println("    ______________________________");
             } else if (userInput.startsWith("event")) {
                 String[] splitUserInput = userInput.split("event");
@@ -84,7 +87,8 @@ public class Kiwi {
                 String endTime = startEndTime[1].strip();
                 Task eventTask = new Event(task, startTime, endTime);
                 taskList[numOfItems++] = eventTask;
-                System.out.println("    added: " + eventTask);
+                System.out.println("    Got it! I've added your task:\n    " + eventTask);
+                System.out.println("    Now you have " + numOfItems + " tasks in this list.");
                 System.out.println("    ______________________________");
             }
         }
