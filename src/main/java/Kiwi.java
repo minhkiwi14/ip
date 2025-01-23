@@ -100,6 +100,14 @@ public class Kiwi {
                 taskList.get(index).markAsUndone();
                 System.out.println("    Uh oh! Do it soon!\n    " + taskList.get(index));
                 System.out.println("    ______________________________");
+            } else if (userInput.startsWith("delete")) {
+                String[] splitUserInput = userInput.split(" ");
+                int index = Integer.parseInt(splitUserInput[1]) - 1;
+                Task removedTask = taskList.get(index);
+                taskList.remove(index);
+                System.out.println("    OK! I've removed this task:\n    " + removedTask);
+                System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
+                System.out.println("    ______________________________");
             } else if (userInput.startsWith("todo")) {
                 try {
                     Task todoTask = getTodo(userInput);
