@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Kiwi {
@@ -5,13 +6,12 @@ public class Kiwi {
      * Prints each item in the provided array with numbering, indented by 4 spaces.
      * After printing all items, it prints a separator line.
      *
-     * @param array      The array of strings.
-     * @param numOfItems The number of items in the array.
+     * @param list The list of tasks.
      */
-    public static void printList(Task[] array, int numOfItems) {
+    public static void printList(ArrayList<Task> list) {
         System.out.println("    Here are your tasks:");
-        for (int i = 0; i < numOfItems; i++) {
-            System.out.println("    " + (i + 1) + ". " + array[i]);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("    " + (i + 1) + ". " + list.get(i));
         }
         System.out.println("    ______________________________");
     }
@@ -75,8 +75,7 @@ public class Kiwi {
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
 
-        Task[] taskList = new Task[100];
-        int numOfItems = 0;
+        ArrayList<Task> taskList = new ArrayList<>(100);
 
         while (scanner.hasNextLine()) {
             userInput = scanner.nextLine();
@@ -88,25 +87,25 @@ public class Kiwi {
             }
 
             if (userInput.equals("list")) {
-                printList(taskList, numOfItems);
+                printList(taskList);
             } else if (userInput.startsWith("mark")) {
                 String[] splitUserInput = userInput.split(" ");
                 int index = Integer.parseInt(splitUserInput[1]) - 1;
-                taskList[index].markAsDone();
-                System.out.println("    Congratulations on having done it!\n    " + taskList[index]);
+                taskList.get(index).markAsDone();
+                System.out.println("    Congratulations on having done it!\n    " + taskList.get(index));
                 System.out.println("    ______________________________");
             } else if (userInput.startsWith("unmark")) {
                 String[] splitUserInput = userInput.split(" ");
                 int index = Integer.parseInt(splitUserInput[1]) - 1;
-                taskList[index].markAsUndone();
-                System.out.println("    Uh oh! Do it soon!\n    " + taskList[index]);
+                taskList.get(index).markAsUndone();
+                System.out.println("    Uh oh! Do it soon!\n    " + taskList.get(index));
                 System.out.println("    ______________________________");
             } else if (userInput.startsWith("todo")) {
                 try {
                     Task todoTask = getTodo(userInput);
-                    taskList[numOfItems++] = todoTask;
+                    taskList.add(todoTask);
                     System.out.println("    Got it! I've added your task:\n    " + todoTask);
-                    System.out.println("    Now you have " + numOfItems + " tasks in this list.");
+                    System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
@@ -114,9 +113,9 @@ public class Kiwi {
             } else if (userInput.startsWith("deadline")) {
                 try {
                     Task deadlineTask = getDeadline(userInput);
-                    taskList[numOfItems++] = deadlineTask;
+                    taskList.add(deadlineTask);
                     System.out.println("    Got it! I've added your task:\n    " + deadlineTask);
-                    System.out.println("    Now you have " + numOfItems + " tasks in this list.");
+                    System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
@@ -124,9 +123,9 @@ public class Kiwi {
             } else if (userInput.startsWith("event")) {
                 try {
                     Task eventTask = getEvent(userInput);
-                    taskList[numOfItems++] = eventTask;
+                    taskList.add(eventTask);
                     System.out.println("    Got it! I've added your task:\n    " + eventTask);
-                    System.out.println("    Now you have " + numOfItems + " tasks in this list.");
+                    System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
