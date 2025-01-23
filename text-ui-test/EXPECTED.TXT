@@ -1,7 +1,61 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+ _   __  _              _    __     __
+| | / / |_|            |_|  /  \   /  \
+| |/ /   _  __      __  _  /_/\_\ /_/\_\
+|   <   | | \ \    / / | |
+| |\ \  | |  \ \/\/ /  | |
+|_| \_\ |_|   \_/\_/   |_|
 
+    Bonjour!
+    What should I do now?
+    ______________________________
+    ______________________________
+    Got it! I've added your task:
+    [T][ ] watch the course briefing videos
+    Now you have 1 tasks in this list.
+    ______________________________
+    ______________________________
+    Got it! I've added your task:
+    [D][ ] complete iP tasks (by: Friday 1600)
+    Now you have 2 tasks in this list.
+    ______________________________
+    ______________________________
+    Got it! I've added your task:
+    [E][ ] watch Australian Open (from: 1030 to: 1230)
+    Now you have 3 tasks in this list.
+    ______________________________
+    ______________________________
+    Here are your tasks:
+    1. [T][ ] watch the course briefing videos
+    2. [D][ ] complete iP tasks (by: Friday 1600)
+    3. [E][ ] watch Australian Open (from: 1030 to: 1230)
+    ______________________________
+    ______________________________
+    Congratulations on having done it!
+    [D][X] complete iP tasks (by: Friday 1600)
+    ______________________________
+    Here are your tasks:
+    1. [T][ ] watch the course briefing videos
+    2. [D][X] complete iP tasks (by: Friday 1600)
+    3. [E][ ] watch Australian Open (from: 1030 to: 1230)
+    ______________________________
+    ______________________________
+    Congratulations on having done it!
+    [E][X] watch Australian Open (from: 1030 to: 1230)
+    ______________________________
+    Here are your tasks:
+    1. [T][ ] watch the course briefing videos
+    2. [D][X] complete iP tasks (by: Friday 1600)
+    3. [E][X] watch Australian Open (from: 1030 to: 1230)
+    ______________________________
+    ______________________________
+    Uh oh! Do it soon!
+    [E][ ] watch Australian Open (from: 1030 to: 1230)
+    ______________________________
+    Here are your tasks:
+    1. [T][ ] watch the course briefing videos
+    2. [D][X] complete iP tasks (by: Friday 1600)
+    3. [E][ ] watch Australian Open (from: 1030 to: 1230)
+    ______________________________
+    ______________________________
+    Au revoir!
+    I'm happy to serve you today. See you again soon!

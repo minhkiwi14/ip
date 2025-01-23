@@ -1,0 +1,11 @@
+todo watch the course briefing videos
+deadline complete iP tasks /by Friday 1600
+event watch Australian Open /from 1030 /to 1230
+list
+mark 2
+list
+mark 3
+list
+unmark 3
+list
+bye
