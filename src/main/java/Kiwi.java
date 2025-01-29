@@ -13,7 +13,6 @@ public class Kiwi {
         for (int i = 0; i < list.size(); i++) {
             System.out.println("    " + (i + 1) + ". " + list.get(i));
         }
-        System.out.println("    ______________________________");
     }
 
     public static Task getTodo(String userInput) throws KiwiException {
@@ -81,34 +80,50 @@ public class Kiwi {
             userInput = scanner.nextLine();
             System.out.println("    ______________________________");
 
-            if (userInput.equals("bye")) {
+            String command = userInput.split(" ")[0];
+
+            switch (command) {
+            case "bye":
                 System.out.println("    " + byeMessage);
                 break;
-            }
 
-            if (userInput.equals("list")) {
+            case "list":
                 printList(taskList);
-            } else if (userInput.startsWith("mark")) {
-                String[] splitUserInput = userInput.split(" ");
-                int index = Integer.parseInt(splitUserInput[1]) - 1;
-                taskList.get(index).markAsDone();
-                System.out.println("    Congratulations on having done it!\n    " + taskList.get(index));
-                System.out.println("    ______________________________");
-            } else if (userInput.startsWith("unmark")) {
-                String[] splitUserInput = userInput.split(" ");
-                int index = Integer.parseInt(splitUserInput[1]) - 1;
-                taskList.get(index).markAsUndone();
-                System.out.println("    Uh oh! Do it soon!\n    " + taskList.get(index));
-                System.out.println("    ______________________________");
-            } else if (userInput.startsWith("delete")) {
-                String[] splitUserInput = userInput.split(" ");
-                int index = Integer.parseInt(splitUserInput[1]) - 1;
-                Task removedTask = taskList.get(index);
-                taskList.remove(index);
-                System.out.println("    OK! I've removed this task:\n    " + removedTask);
-                System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
-                System.out.println("    ______________________________");
-            } else if (userInput.startsWith("todo")) {
+                break;
+
+            case "mark":
+                try {
+                    int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                    taskList.get(index).markAsDone();
+                    System.out.println("    Congratulations on having done it!\n    " + taskList.get(index));
+                } catch (Exception e) {
+                    System.out.println("    Invalid mark command or index. Please try again!");
+                }
+                break;
+
+            case "unmark":
+                try {
+                    int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                    taskList.get(index).markAsUndone();
+                    System.out.println("    Uh oh! Do it soon!\n    " + taskList.get(index));
+                } catch (Exception e) {
+                    System.out.println("    Invalid unmark command or index. Please try again!");
+                }
+                break;
+
+            case "delete":
+                try {
+                    int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                    Task removedTask = taskList.get(index);
+                    taskList.remove(index);
+                    System.out.println("    OK! I've removed this task:\n    " + removedTask);
+                    System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
+                } catch (Exception e) {
+                    System.out.println("    Invalid delete command or index. Please try again!");
+                }
+                break;
+
+            case "todo":
                 try {
                     Task todoTask = getTodo(userInput);
                     taskList.add(todoTask);
@@ -117,8 +132,9 @@ public class Kiwi {
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
-                System.out.println("    ______________________________");
-            } else if (userInput.startsWith("deadline")) {
+                break;
+
+            case "deadline":
                 try {
                     Task deadlineTask = getDeadline(userInput);
                     taskList.add(deadlineTask);
@@ -127,8 +143,9 @@ public class Kiwi {
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
-                System.out.println("    ______________________________");
-            } else if (userInput.startsWith("event")) {
+                break;
+
+            case "event":
                 try {
                     Task eventTask = getEvent(userInput);
                     taskList.add(eventTask);
@@ -137,15 +154,21 @@ public class Kiwi {
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
-                System.out.println("    ______________________________");
-            } else {
+                break;
+
+            default:
                 try {
                     throw new KiwiException("This is not a valid command. Please try again!");
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
-                System.out.println("    ______________________________");
             }
+
+            if (command.equals("bye")) {
+                break;
+            }
+
+            System.out.println("    ______________________________");
         }
 
         scanner.close();
