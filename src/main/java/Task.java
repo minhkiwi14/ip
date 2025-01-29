@@ -23,4 +23,12 @@ public class Task {
     public void markAsUndone() {
         this.isDone = false;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
 }
