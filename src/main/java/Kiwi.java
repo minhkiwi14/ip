@@ -1,3 +1,4 @@
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,7 +35,12 @@ public class Kiwi {
             String deadline = splitDeadlineDetails[1].strip();
             return new Deadline(task, deadline);
         } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new KiwiException("The description of the task cannot be empty.");
+            throw new KiwiException(
+                    "The description of a deadline cannot be empty. Use 'deadline <task> /by <date> <time>'.");
+        } catch (DateTimeParseException exception) {
+            throw new KiwiException(
+                    "Invalid date or time format. "
+                            + "Please use 'yyyy-mm-dd' (e.g., 2025-01-31) and 'hh:mm' (e.g., 03:00).");
         }
     }
 

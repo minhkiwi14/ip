@@ -27,7 +27,6 @@ public class Storage {
                     parts[i] = parts[i].trim();
                 }
                 if (parts.length < 3) {
-                    // System.out.println("The format is not correct. Please double-check!");
                     continue;
                 }
 
@@ -47,6 +46,9 @@ public class Storage {
                         continue;
                     }
                     String by = parts[3];
+                    if (!by.contains(" ")) {
+                        by += " 23:59";
+                    }
                     task = new Deadline(description, by);
                     break;
                 case "E":
@@ -108,7 +110,7 @@ public class Storage {
             line = String.format("D | %d | %s | %s",
                     deadline.isDone() ? 1 : 0,
                     deadline.getDescription(),
-                    deadline.getBy());
+                    deadline.getDateTime());
         } else if (task instanceof Event event) {
             line = String.format("E | %d | %s | %s | %s",
                     event.isDone() ? 1 : 0,
