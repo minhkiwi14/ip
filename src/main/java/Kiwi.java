@@ -19,8 +19,7 @@ public class Kiwi {
         try {
             String[] splitUserInput = userInput.split("todo");
             String task = splitUserInput[1].strip();
-            Task todoTask = new Todo(task);
-            return todoTask;
+            return new Todo(task);
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KiwiException("The description of the task cannot be empty.");
         }
@@ -33,8 +32,7 @@ public class Kiwi {
             String[] splitDeadlineDetails = deadlineDetails.split("/by");
             String task = splitDeadlineDetails[0].strip();
             String deadline = splitDeadlineDetails[1].strip();
-            Task deadlineTask = new Deadline(task, deadline);
-            return deadlineTask;
+            return new Deadline(task, deadline);
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KiwiException("The description of the task cannot be empty.");
         }
@@ -50,8 +48,7 @@ public class Kiwi {
             String[] startEndTime = period.split("/to");
             String startTime = startEndTime[0].strip();
             String endTime = startEndTime[1].strip();
-            Task eventTask = new Event(task, startTime, endTime);
-            return eventTask;
+            return new Event(task, startTime, endTime);
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new KiwiException("The description of the task cannot be empty.");
         }
@@ -74,7 +71,15 @@ public class Kiwi {
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
 
+        String filePath = "./data/kiwi.txt";
+        Storage storage = new Storage(filePath);
+
         ArrayList<Task> taskList = new ArrayList<>(100);
+        try {
+            taskList = storage.load();
+        } catch (KiwiException exception) {
+            System.out.println("    " + exception.getMessage());
+        }
 
         while (scanner.hasNextLine()) {
             userInput = scanner.nextLine();
@@ -96,6 +101,7 @@ public class Kiwi {
                     int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
                     taskList.get(index).markAsDone();
                     System.out.println("    Congratulations on having done it!\n    " + taskList.get(index));
+                    storage.save(taskList);
                 } catch (Exception e) {
                     System.out.println("    Invalid mark command or index. Please try again!");
                 }
@@ -106,6 +112,7 @@ public class Kiwi {
                     int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
                     taskList.get(index).markAsUndone();
                     System.out.println("    Uh oh! Do it soon!\n    " + taskList.get(index));
+                    storage.save(taskList);
                 } catch (Exception e) {
                     System.out.println("    Invalid unmark command or index. Please try again!");
                 }
@@ -118,6 +125,7 @@ public class Kiwi {
                     taskList.remove(index);
                     System.out.println("    OK! I've removed this task:\n    " + removedTask);
                     System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
+                    storage.save(taskList);
                 } catch (Exception e) {
                     System.out.println("    Invalid delete command or index. Please try again!");
                 }
@@ -129,6 +137,7 @@ public class Kiwi {
                     taskList.add(todoTask);
                     System.out.println("    Got it! I've added your task:\n    " + todoTask);
                     System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
+                    storage.save(taskList);
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
@@ -140,6 +149,7 @@ public class Kiwi {
                     taskList.add(deadlineTask);
                     System.out.println("    Got it! I've added your task:\n    " + deadlineTask);
                     System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
+                    storage.save(taskList);
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
@@ -151,6 +161,7 @@ public class Kiwi {
                     taskList.add(eventTask);
                     System.out.println("    Got it! I've added your task:\n    " + eventTask);
                     System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
+                    storage.save(taskList);
                 } catch (KiwiException exception) {
                     System.out.println("    " + exception.getMessage());
                 }
