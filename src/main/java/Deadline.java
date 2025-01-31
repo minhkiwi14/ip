@@ -35,4 +35,13 @@ public class Deadline extends Task {
     public String getDateTime() {
         return date + " " + time;
     }
+
+    @Override
+    public String toFileFormat() {
+        return String.format("D | %d | %s | %s %s",
+                isDone ? 1 : 0,
+                description,
+                date,
+                time.format(DateTimeFormatter.ofPattern("HH:mm")));
+    }
 }

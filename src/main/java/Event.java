@@ -20,4 +20,13 @@ public class Event extends Task {
     public String getTo() {
         return to;
     }
+
+    @Override
+    public String toFileFormat() {
+        return String.format("E | %d | %s | %s | %s",
+                isDone ? 1 : 0,
+                description,
+                from,
+                to);
+    }
 }
