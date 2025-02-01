@@ -1,3 +1,15 @@
+package kiwi;
+
+import kiwi.command.Parser;
+import kiwi.command.TaskList;
+import kiwi.exception.KiwiException;
+import kiwi.storage.Storage;
+import kiwi.task.Deadline;
+import kiwi.task.Event;
+import kiwi.task.Task;
+import kiwi.task.Todo;
+import kiwi.ui.Ui;
+
 import java.util.Scanner;
 
 public class Kiwi {
@@ -102,7 +114,7 @@ public class Kiwi {
 
     private void handleTodoCommand(String arguments) throws KiwiException {
         if (arguments.isEmpty()) {
-            throw new KiwiException("Todo description cannot be empty!");
+            throw new KiwiException("kiwi.task.Todo description cannot be empty!");
         }
         Task task = new Todo(arguments);
         tasks.addTask(task);

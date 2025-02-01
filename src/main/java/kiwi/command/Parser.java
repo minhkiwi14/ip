@@ -1,3 +1,7 @@
+package kiwi.command;
+
+import kiwi.exception.KiwiException;
+
 public class Parser {
     public static int parseIndex(String arguments, int taskCount) throws KiwiException {
         try {
