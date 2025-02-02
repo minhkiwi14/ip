@@ -5,10 +5,22 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+/**
+ * Represents a task with a specific deadline containing both date and optional time components.
+ * Formats deadlines as "MMM d yyyy" (e.g., Oct 10 2023) and times as "h a" (e.g., 3PM) in output.
+ * Inherits base task functionality from {@link Task}.
+ */
 public class Deadline extends Task {
     protected LocalDate date;
     protected LocalTime time;
 
+    /**
+     * Constructs a deadline task from description and date/time string.
+     * Handles missing time by defaulting to 23:59. Input format: "yyyy-MM-dd [HH:mm]".
+     *
+     * @param description Task description
+     * @param by          Combined date and optional time string (e.g., "2023-10-10 15:00")
+     */
     public Deadline(String description, String by) {
         super(description);
         String[] dateTimeParts = by.split(" ", 2);
@@ -21,6 +33,11 @@ public class Deadline extends Task {
                 : LocalTime.of(23, 59);
     }
 
+    /**
+     * Returns formatted string with deadline details.
+     * Includes time only if not default (23:59). Example output:
+     * [D][X] Submit report (by: Oct 10 2023 3PM)
+     */
     @Override
     public String toString() {
         // Solution adapted from ChatGPT with the prompt:
@@ -34,10 +51,19 @@ public class Deadline extends Task {
                 + timeString + ")";
     }
 
+    /**
+     * Returns machine-readable date/time string in "yyyy-MM-dd HH:mm" format.
+     * Preserves default 23:59 time if originally unspecified.
+     */
     public String getDateTime() {
         return date + " " + time;
     }
 
+    /**
+     * Generates file storage entry with format:
+     * D | [0/1] | [description] | yyyy-MM-dd HH:mm
+     * Ensures 24-hour time format for reliable parsing.
+     */
     @Override
     public String toFileFormat() {
         return String.format("D | %d | %s | %s %s",
