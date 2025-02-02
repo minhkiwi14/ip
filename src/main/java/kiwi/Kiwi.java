@@ -77,6 +77,10 @@ public class Kiwi {
                     handleEventCommand(arguments);
                     break;
 
+                case "find":
+                    handleFindCommand(arguments);
+                    break;
+
                 default:
                     throw new KiwiException("I don't understand that command!");
                 }
@@ -110,6 +114,20 @@ public class Kiwi {
         int index = Parser.parseIndex(arguments, tasks.size());
         Task removed = tasks.deleteTask(index);
         ui.showDeleteMessage(removed, tasks.size());
+    }
+
+    /**
+     * Handles the find command by searching tasks matching the given keyword.
+     *
+     * @param keyword The search term to look for in task descriptions
+     * @throws KiwiException If the keyword is empty
+     */
+    private void handleFindCommand(String keyword) throws KiwiException {
+        if (keyword.isEmpty()) {
+            throw new KiwiException("Please specify a search keyword!");
+        }
+        TaskList matchingTasks = tasks.findTasks(keyword);
+        ui.showFoundTasks(matchingTasks);
     }
 
     private void handleTodoCommand(String arguments) throws KiwiException {

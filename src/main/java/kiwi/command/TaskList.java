@@ -46,6 +46,25 @@ public class TaskList {
         task.markAsUndone();
     }
 
+    /**
+     * Finds tasks containing the specified keyword in their description.
+     * The search is case-insensitive.
+     *
+     * @param keyword The search term to match
+     * @return A new TaskList containing all matching tasks
+     */
+    public TaskList findTasks(String keyword) {
+        ArrayList<Task> matches = new ArrayList<>();
+        String searchTerm = keyword.toLowerCase();
+
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(searchTerm)) {
+                matches.add(task);
+            }
+        }
+        return new TaskList(matches);
+    }
+
     public int size() {
         return tasks.size();
     }
