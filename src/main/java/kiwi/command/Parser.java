@@ -40,6 +40,7 @@ public class Parser {
         if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
             throw new KiwiException("Invalid deadline format! Use: deadline <description> /by <date> <time>");
         }
+        
         return new String[]{parts[0].trim(), parts[1].trim()};
     }
 
