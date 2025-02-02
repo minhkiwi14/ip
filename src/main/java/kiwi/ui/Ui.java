@@ -79,6 +79,27 @@ public class Ui {
     }
 
     /**
+     * Displays the list of tasks matching a search query.
+     * Shows a special message if no matches are found.
+     *
+     * @param matchingTasks The list of tasks that match the search criteria
+     */
+    public void showFoundTasks(TaskList matchingTasks) {
+        if (matchingTasks.size() == 0) {
+            showMessage("No tasks found matching your search.");
+        } else {
+            System.out.println("    Here are the matching tasks in your list:");
+            for (int i = 0; i < matchingTasks.size(); i++) {
+                try {
+                    System.out.println("    " + (i + 1) + ". " + matchingTasks.getTask(i));
+                } catch (KiwiException e) {
+                    System.out.println("    Error displaying task " + (i + 1));
+                }
+            }
+        }
+    }
+
+    /**
      * Displays a message when a task is marked as done.
      *
      * @param task The task that was marked as done.
@@ -104,7 +125,7 @@ public class Ui {
      */
     public void showDeleteMessage(Task task, int remainingTasks) {
         showMessage("OK! I've removed this task:\n    " + task);
-        showMessage("Now you have " + remainingTasks + " tasks in the list");
+        showMessage("Now you have " + remainingTasks + " tasks in the list.");
     }
 
     /**
@@ -115,6 +136,6 @@ public class Ui {
      */
     public void showAddMessage(Task task, int totalTasks) {
         showMessage("Got it! I've added your task:\n    " + task);
-        showMessage("Now you have " + totalTasks + " tasks in the list");
+        showMessage("Now you have " + totalTasks + " tasks in the list.");
     }
 }
