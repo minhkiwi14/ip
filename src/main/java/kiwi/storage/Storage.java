@@ -14,13 +14,29 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles persistent storage of tasks by reading from and writing to a file.
+ * Supports loading tasks from a predefined file format and saving tasks in a format
+ * suitable for later reconstruction.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Creates a Storage instance associated with the specified file path.
+     *
+     * @param filePath The path to the file used for task persistence.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the storage file. Creates an empty file if none exists.
+     *
+     * @return An ArrayList of reconstructed Task objects.
+     * @throws KiwiException If file reading fails or data formatting errors occur.
+     */
     public ArrayList<Task> load() throws KiwiException {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
@@ -44,6 +60,19 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Parses a single file line into a Task object.
+     * Expected formats:
+     * <ul>
+     *   <li>Todo: T | [0/1] | [description]</li>
+     *   <li>Deadline: D | [0/1] | [description] | [dueDateTime]</li>
+     *   <li>Event: E | [0/1] | [description] | [start] | [end]</li>
+     * </ul>
+     *
+     * @param line A line from the storage file
+     * @return Reconstructed Task object, or null for invalid/empty lines
+     * @throws KiwiException For malformed lines, invalid dates, or missing fields
+     */
     private Task parseLine(String line) throws KiwiException {
         String[] parts = line.split("\\|");
         for (int i = 0; i < parts.length; i++) {
@@ -100,6 +129,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves all tasks to the storage file in a machine-readable format.
+     * Overwrites existing file contents completely.
+     *
+     * @param tasks The list of tasks to persist
+     * @throws KiwiException If file writing fails
+     */
     public void save(ArrayList<Task> tasks) throws KiwiException {
         try {
             FileWriter writer = new FileWriter(filePath);

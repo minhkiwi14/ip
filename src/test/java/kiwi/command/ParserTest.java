@@ -17,10 +17,10 @@ public class ParserTest {
 
     @Test
     public void testParseDeadline_exceptionThrown() throws KiwiException {
-        String deadline = "doing homework by 2025-04-02 23:00";
+        String d1 = "doing homework by 2025-04-02 23:00";
 
         try {
-            assertEquals("doing homework", Parser.parseDeadlineArgs(deadline)[0]);
+            assertEquals("doing homework", Parser.parseDeadlineArgs(d1)[0]);
             fail();
         } catch (KiwiException exception) {
             assertEquals("Invalid deadline format! Use: deadline <description> /by <date> <time>",
