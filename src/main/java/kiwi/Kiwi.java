@@ -1,5 +1,7 @@
 package kiwi;
 
+import java.util.Scanner;
+
 import kiwi.command.Parser;
 import kiwi.command.TaskList;
 import kiwi.exception.KiwiException;
@@ -9,8 +11,6 @@ import kiwi.task.Event;
 import kiwi.task.Task;
 import kiwi.task.Todo;
 import kiwi.ui.Ui;
-
-import java.util.Scanner;
 
 /**
  * The main Kiwi class that handles the logic for managing tasks and user interaction.
@@ -148,6 +148,7 @@ public class Kiwi {
         ui.showDeleteMessage(removed, tasks.size());
     }
 
+    /**
      * Handles the find command by searching tasks matching the given keyword.
      *
      * @param keyword The search term to look for in task descriptions
