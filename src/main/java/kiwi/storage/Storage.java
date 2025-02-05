@@ -1,11 +1,5 @@
 package kiwi.storage;
 
-import kiwi.exception.KiwiException;
-import kiwi.task.Deadline;
-import kiwi.task.Event;
-import kiwi.task.Task;
-import kiwi.task.Todo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -13,6 +7,12 @@ import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import kiwi.exception.KiwiException;
+import kiwi.task.Deadline;
+import kiwi.task.Event;
+import kiwi.task.Task;
+import kiwi.task.Todo;
 
 /**
  * Handles persistent storage of tasks by reading from and writing to a file.
@@ -80,8 +80,9 @@ public class Storage {
         }
 
         try {
-            if (parts.length < 3)
+            if (parts.length < 3) {
                 return null;
+            }
 
             String type = parts[0];
             boolean isDone = parts[1].equals("1");
@@ -91,21 +92,24 @@ public class Storage {
 
             switch (type) {
             case "T":
-                if (parts.length < 3)
+                if (parts.length < 3) {
                     throw new KiwiException("Invalid todo format");
+                }
                 task = new Todo(description);
                 break;
 
             case "D":
-                if (parts.length < 4)
+                if (parts.length < 4) {
                     throw new KiwiException("Invalid deadline format");
+                }
                 String by = parts[3];
                 task = new Deadline(description, by);
                 break;
 
             case "E":
-                if (parts.length < 5)
+                if (parts.length < 5) {
                     throw new KiwiException("Invalid event format");
+                }
                 String from = parts[3];
                 String to = parts[4];
                 task = new Event(description, from, to);
