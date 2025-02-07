@@ -22,8 +22,8 @@ public class MainWindow extends AnchorPane {
 
     private Kiwi kiwiChatbot;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Eyes.png"));
+    private Image kiwiImage = new Image(this.getClass().getResourceAsStream("/images/Kiwi.png"));
 
     @FXML
     public void initialize() {
@@ -33,6 +33,8 @@ public class MainWindow extends AnchorPane {
     /** Injects the Kiwi instance */
     public void setKiwi(Kiwi k) {
         kiwiChatbot = k;
+        String greeting = kiwiChatbot.getGreeting();
+        dialogContainer.getChildren().add(DialogBox.getKiwiDialog(greeting, kiwiImage));
     }
 
     /**
@@ -42,12 +44,16 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = duke.getResponse(input);
+        String response = kiwiChatbot.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getKiwiDialog(response, dukeImage)
+                DialogBox.getKiwiDialog(response, kiwiImage)
         );
         userInput.clear();
+        if (response.contains("Bye. Hope to see you again soon!")) {
+            // Optionally handle application exit here
+            javafx.application.Platform.exit();
+        }
     }
 }
 
