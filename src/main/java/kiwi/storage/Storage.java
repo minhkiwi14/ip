@@ -22,6 +22,16 @@ import kiwi.task.Todo;
 public class Storage {
     private final String filePath;
 
+    private static final int MIN_TODO_PARTS = 3;
+    private static final int MIN_DEADLINE_PARTS = 4;
+    private static final int MIN_EVENT_PARTS = 5;
+
+    private static final String TASK_TYPE_TODO = "T";
+    private static final String TASK_TYPE_DEADLINE = "D";
+    private static final String TASK_TYPE_EVENT = "E";
+
+    private static final String TASK_COMPLETED = "1";
+
     /**
      * Creates a Storage instance associated with the specified file path.
      *
@@ -75,62 +85,57 @@ public class Storage {
      */
     private Task parseLine(String line) throws KiwiException {
         String[] parts = line.split("\\|");
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
+        trimParts(parts);
+
+        if (parts.length < MIN_TODO_PARTS) {
+            return null;
         }
 
-        try {
-            if (parts.length < 3) {
-                return null;
-            }
+        String type = parts[0];
+        boolean isDone = parseIsDone(parts[1]);
+        String description = parts[2];
 
-            String type = parts[0];
-            boolean isDone = parts[1].equals("1");
-            String description = parts[2];
+        Task task = switch (type) {
+            case TASK_TYPE_TODO -> parseTodo(description);
+            case TASK_TYPE_DEADLINE -> parseDeadline(parts);
+            case TASK_TYPE_EVENT -> parseEvent(parts);
+            default -> null;
+        };
 
-            Task task = null;
-
-            switch (type) {
-            case "T":
-                if (parts.length < 3) {
-                    throw new KiwiException("Invalid todo format");
-                }
-                task = new Todo(description);
-                break;
-
-            case "D":
-                if (parts.length < 4) {
-                    throw new KiwiException("Invalid deadline format");
-                }
-                String by = parts[3];
-                task = new Deadline(description, by);
-                break;
-
-            case "E":
-                if (parts.length < 5) {
-                    throw new KiwiException("Invalid event format");
-                }
-                String from = parts[3];
-                String to = parts[4];
-                task = new Event(description, from, to);
-                break;
-
-            default:
-                return null;
-            }
-
-            if (task != null && isDone) {
-                task.markAsDone();
-            }
-            return task;
-
-        } catch (DateTimeParseException e) {
-            throw new KiwiException("Invalid date/time format in line: " + line);
-        } catch (IndexOutOfBoundsException e) {
-            throw new KiwiException("Missing fields in line: " + line);
-        } catch (Exception e) {
-            throw new KiwiException("Error parsing line: " + line + " - " + e.getMessage());
+        if (task != null && isDone) {
+            task.markAsDone();
         }
+        return task;
+    }
+
+    private boolean parseIsDone(String status) {
+        return TASK_COMPLETED.equals(status);
+    }
+
+    private Task parseTodo(String description) throws KiwiException {
+        if (description.isEmpty()) {
+            throw new KiwiException("Invalid todo format");
+        }
+        return new Todo(description);
+    }
+
+    private Task parseDeadline(String[] parts) throws KiwiException {
+        if (parts.length < MIN_DEADLINE_PARTS) {
+            throw new KiwiException("Invalid deadline format");
+        }
+        String description = parts[2];
+        String by = parts[3];
+        return new Deadline(description, by);
+    }
+
+    private Task parseEvent(String[] parts) throws KiwiException {
+        if (parts.length < MIN_EVENT_PARTS) {
+            throw new KiwiException("Invalid event format");
+        }
+        String description = parts[2];
+        String from = parts[3];
+        String to = parts[4];
+        return new Event(description, from, to);
     }
 
     /**
@@ -149,6 +154,15 @@ public class Storage {
             writer.close();
         } catch (IOException e) {
             throw new KiwiException("Error saving tasks to file");
+        }
+    }
+
+    /**
+     * Trims leading and trailing whitespaces from each element in the array.
+     */
+    private void trimParts(String[] parts) {
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
         }
     }
 }
