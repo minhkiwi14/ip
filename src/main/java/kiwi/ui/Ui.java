@@ -3,6 +3,9 @@ package kiwi.ui;
 import kiwi.command.TaskList;
 import kiwi.exception.KiwiException;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class Ui {
     public String showWelcome() {
         return "Hello! I'm Kiwi, your friendly task manager!\nWhat can I do for you?";
@@ -32,11 +35,16 @@ public class Ui {
         if (tasks.size() == 0) {
             return "Your task list is empty!";
         } else {
-            StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-            for (int i = 0; i < tasks.size(); i++) {
-                sb.append((i + 1) + "." + tasks.getTask(i) + "\n");
-            }
-            return sb.toString().trim();
+            String tasksList = IntStream.range(0, tasks.size())
+                    .mapToObj(i -> {
+                        try {
+                            return (i + 1) + "." + tasks.getTask(i);
+                        } catch (KiwiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .collect(Collectors.joining("\n"));
+            return ("Here are the tasks in your list:\n" + tasksList).trim();
         }
     }
 
@@ -52,11 +60,16 @@ public class Ui {
         if (matchingTasks.size() == 0) {
             return "No tasks found matching your search.";
         } else {
-            StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
-            for (int i = 0; i < matchingTasks.size(); i++) {
-                sb.append((i + 1) + "." + matchingTasks.getTask(i) + "\n");
-            }
-            return sb.toString().trim();
+            String tasksList = IntStream.range(0, matchingTasks.size())
+                    .mapToObj(i -> {
+                        try {
+                            return (i + 1) + "." + matchingTasks.getTask(i);
+                        } catch (KiwiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .collect(Collectors.joining("\n"));
+            return ("Here are the matching tasks in your list:\n" + tasksList).trim();
         }
     }
 }
