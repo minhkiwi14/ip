@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private Kiwi kiwiChatbot = new Kiwi("./data/kiwi.txt");
-    // kiwiChatbot.run();
 
     @Override
     public void start(Stage stage) {
