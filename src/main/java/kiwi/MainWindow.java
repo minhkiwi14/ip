@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 /**
  * Controller for the main GUI.
  */
@@ -30,10 +31,13 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Kiwi instance */
+    /**
+     * Injects the Kiwi instance
+     */
     public void setKiwi(Kiwi k) {
         kiwiChatbot = k;
         String greeting = kiwiChatbot.getGreeting();
+        assert greeting != null;
         dialogContainer.getChildren().add(DialogBox.getKiwiDialog(greeting, kiwiImage));
     }
 
@@ -45,13 +49,15 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = kiwiChatbot.getResponse(input);
+
+        assert response != null;
+
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getKiwiDialog(response, kiwiImage)
         );
         userInput.clear();
         if (response.contains("Bye. Hope to see you again soon!")) {
-            // Optionally handle application exit here
             javafx.application.Platform.exit();
         }
     }
