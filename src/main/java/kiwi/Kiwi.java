@@ -137,6 +137,6 @@ public class Kiwi {
     }
 
     private String handleEdit(String arguments) throws KiwiException {
-        return "";
+        return ui.showEditMessage(tasks.getTask(0), tasks.size());
     }
 }
