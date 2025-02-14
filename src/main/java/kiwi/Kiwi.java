@@ -62,6 +62,8 @@ public class Kiwi {
                 return handleEvent(arguments);
             case "find":
                 return handleFind(arguments);
+            case "edit":
+                return handleEdit(arguments);
             default:
                 throw new KiwiException("I don't understand that command!");
             }
@@ -132,5 +134,9 @@ public class Kiwi {
         }
         TaskList matchingTasks = tasks.findTasks(arguments);
         return ui.showFoundTasks(matchingTasks);
+    }
+
+    private String handleEdit(String arguments) throws KiwiException {
+        return ui.showEditMessage(tasks.getTask(0), tasks.size());
     }
 }

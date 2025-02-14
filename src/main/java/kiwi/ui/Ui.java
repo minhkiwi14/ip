@@ -32,6 +32,10 @@ public class Ui {
         return "Got it. I've added this task:\n  " + task + "\nNow you have " + size + " tasks in the list.";
     }
 
+    public String showEditMessage(Task task, int size) {
+        return "I've edited this task to:\n  " + task;
+    }
+
     public String printTasks(TaskList tasks) throws KiwiException {
         if (tasks.size() == 0) {
             return "Your task list is empty!";
