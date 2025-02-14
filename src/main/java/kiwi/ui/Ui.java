@@ -2,6 +2,7 @@ package kiwi.ui;
 
 import kiwi.command.TaskList;
 import kiwi.exception.KiwiException;
+import kiwi.task.Task;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -15,19 +16,19 @@ public class Ui {
         return "Bye. Hope to see you again soon!";
     }
 
-    public String showMarkMessage(kiwi.task.Task task) {
+    public String showMarkMessage(Task task) {
         return "Nice! I've marked this task as done:\n  " + task;
     }
 
-    public String showUnmarkMessage(kiwi.task.Task task) {
+    public String showUnmarkMessage(Task task) {
         return "OK, I've marked this task as not done yet:\n  " + task;
     }
 
-    public String showDeleteMessage(kiwi.task.Task task, int size) {
+    public String showDeleteMessage(Task task, int size) {
         return "Noted. I've removed this task:\n  " + task + "\nNow you have " + size + " tasks in the list.";
     }
 
-    public String showAddMessage(kiwi.task.Task task, int size) {
+    public String showAddMessage(Task task, int size) {
         return "Got it. I've added this task:\n  " + task + "\nNow you have " + size + " tasks in the list.";
     }
 
