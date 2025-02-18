@@ -77,4 +77,14 @@ public class Ui {
             return ("Here are the matching tasks in your list:\n" + tasksList).trim();
         }
     }
+
+    /**
+     * Shows success message after editing a task
+     *
+     * @param task The updated task
+     * @return Formatted success message
+     */
+    public String showEditSuccess(Task task) {
+        return "Task updated successfully!\n    " + task;
+    }
 }

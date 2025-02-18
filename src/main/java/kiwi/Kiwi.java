@@ -10,6 +10,8 @@ import kiwi.task.Task;
 import kiwi.task.Todo;
 import kiwi.ui.Ui;
 
+import java.util.Map;
+
 public class Kiwi {
     private final Ui ui;
     private final Storage storage;
@@ -137,6 +139,43 @@ public class Kiwi {
     }
 
     private String handleEdit(String arguments) throws KiwiException {
-        return ui.showEditMessage(tasks.getTask(0), tasks.size());
+        Map<String, String> updates = Parser.parseEditArgs(arguments);
+        int index = Integer.parseInt(updates.get("index"));
+
+        Task originalTask = tasks.getTask(index);
+        Task updatedTask = createUpdatedTask(originalTask, updates);
+
+        tasks.replaceTask(index, updatedTask);
+        storage.save(tasks.getAllTasks());
+        return ui.showEditSuccess(updatedTask);
+    }
+
+    private Task createUpdatedTask(Task original, Map<String, String> updates) throws KiwiException {
+        if (original instanceof Todo) {
+            return updateTodo((Todo) original, updates);
+        } else if (original instanceof Deadline) {
+            return updateDeadline((Deadline) original, updates);
+        } else if (original instanceof Event) {
+            return updateEvent((Event) original, updates);
+        }
+        throw new KiwiException("Cannot edit unknown task type");
+    }
+
+    private Todo updateTodo(Todo original, Map<String, String> updates) throws KiwiException {
+        String newDesc = updates.getOrDefault("desc", original.getDescription());
+        return new Todo(newDesc);
+    }
+
+    private Deadline updateDeadline(Deadline original, Map<String, String> updates) throws KiwiException {
+        String newDesc = updates.getOrDefault("desc", original.getDescription());
+        String newBy = updates.getOrDefault("by", original.getBy());
+        return new Deadline(newDesc, newBy);
+    }
+
+    private Event updateEvent(Event original, Map<String, String> updates) throws KiwiException {
+        String newDesc = updates.getOrDefault("desc", original.getDescription());
+        String newFrom = updates.getOrDefault("from", original.getFrom());
+        String newTo = updates.getOrDefault("to", original.getTo());
+        return new Event(newDesc, newFrom, newTo);
     }
 }

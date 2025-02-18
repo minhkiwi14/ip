@@ -59,6 +59,10 @@ public class Deadline extends Task {
         return date + " " + time;
     }
 
+    public String getBy() {
+        return date.toString() + " " + time.format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
     /**
      * Generates file storage entry with format:
      * D | [0/1] | [description] | yyyy-MM-dd HH:mm

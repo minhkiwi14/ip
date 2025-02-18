@@ -109,6 +109,21 @@ public class TaskList {
     }
 
     /**
+     * Replaces a task at the specified index with a new task
+     *
+     * @param index The 0-based index of the task to replace
+     * @param newTask The new task to put in the list
+     * @throws KiwiException If the index is out of bounds
+     */
+    public void replaceTask(int index, Task newTask) throws KiwiException {
+        try {
+            tasks.set(index, newTask);
+        } catch (IndexOutOfBoundsException e) {
+            throw new KiwiException("Invalid task number!");
+        }
+    }
+
+    /**
      * Returns the number of tasks in the list.
      *
      * @return The current size of the task list.

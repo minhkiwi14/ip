@@ -2,6 +2,11 @@ package kiwi.command;
 
 import kiwi.exception.KiwiException;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Provides utility methods for parsing user input arguments into specific components required by the application.
  */
@@ -69,5 +74,44 @@ public class Parser {
                 timeParts[0].trim(),
                 timeParts[1].trim()
         };
+    }
+
+    /**
+     * Parses arguments for an edit command into its index and update fields.
+     * Expects the input format: "index [/desc DESCRIPTION] [/by DEADLINE] [/from START] [/to END]".
+     *
+     * @param arguments The input string containing the edit parameters
+     * @return An array where first element is index and subsequent elements are key-value pairs
+     * @throws KiwiException If the input format is invalid
+     */
+    public static Map<String, String> parseEditArgs(String arguments) throws KiwiException {
+        Map<String, String> updates = new HashMap<>();
+        String[] parts = arguments.split("\\s+/(desc|by|from|to)\\s+", -1);
+
+        if (parts.length < 1) {
+            throw new KiwiException("Invalid edit format! Use: edit <index> [/desc ...] [/by ...] [/from ...] [/to ...]");
+        }
+
+        try {
+            int index = Integer.parseInt(parts[0].trim()) - 1;
+            updates.put("index", String.valueOf(index));
+        } catch (NumberFormatException e) {
+            throw new KiwiException("Invalid task number format!");
+        }
+
+        Pattern pattern = Pattern.compile("/(desc|by|from|to)\\s+([^/]+)");
+        Matcher matcher = pattern.matcher(arguments);
+
+        while (matcher.find()) {
+            String field = matcher.group(1);
+            String value = matcher.group(2).trim();
+            updates.put(field, value);
+        }
+
+        if (updates.size() == 1) { // Only index present
+            throw new KiwiException("No fields to update! Use at least one of: /desc, /by, /from, /to");
+        }
+
+        return updates;
     }
 }
