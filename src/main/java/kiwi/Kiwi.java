@@ -16,7 +16,7 @@ public class Kiwi {
     private final Ui ui;
     private final Storage storage;
     private TaskList tasks;
-    private boolean loadError = false;
+    private boolean hasError = false;
     private String loadErrorMessage = "";
 
     public Kiwi(String filePath) {
@@ -25,7 +25,7 @@ public class Kiwi {
         try {
             tasks = new TaskList(storage.load());
         } catch (KiwiException e) {
-            loadError = true;
+            hasError = true;
             loadErrorMessage = ui.showLoadingError();
             tasks = new TaskList();
         }
@@ -33,7 +33,7 @@ public class Kiwi {
 
     public String getGreeting() {
         String greeting = ui.showWelcome();
-        if (loadError) {
+        if (hasError) {
             greeting += "\n" + loadErrorMessage;
         }
         return greeting;
