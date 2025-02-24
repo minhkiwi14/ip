@@ -23,7 +23,7 @@ add, edit, delete, and search tasks to stay organized!
 ## Quick Start
 
 1. Ensure you have `Java 17` installed on your computer.
-2. Download the latest release of `kiwi.jar` from [here](#).
+2. Download the latest release of `kiwi.jar` from GitHub.
 3. Open a terminal and navigate to the folder containing `kiwi.jar`.
 4. Run the application using the following command:
    `java -jar kiwi.jar`
