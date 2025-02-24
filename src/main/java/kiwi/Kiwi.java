@@ -12,6 +12,10 @@ import kiwi.ui.Ui;
 
 import java.util.Map;
 
+/**
+ * The Kiwi class represents the main controller for the Kiwi task management application.
+ * It handles user input, processes commands, and updates the task list accordingly.
+ */
 public class Kiwi {
     private final Ui ui;
     private final Storage storage;
@@ -19,6 +23,12 @@ public class Kiwi {
     private boolean hasError = false;
     private String loadErrorMessage = "";
 
+    /**
+     * Constructs a Kiwi instance, initializing the UI, storage, and task list.
+     * Attempts to load tasks from the specified file path.
+     *
+     * @param filePath The file path to load the task list from.
+     */
     public Kiwi(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -31,6 +41,11 @@ public class Kiwi {
         }
     }
 
+    /**
+     * Returns the greeting message for the user, including any load error messages.
+     *
+     * @return A string containing the welcome message.
+     */
     public String getGreeting() {
         String greeting = ui.showWelcome();
         if (hasError) {
@@ -39,6 +54,12 @@ public class Kiwi {
         return greeting;
     }
 
+    /**
+     * Processes the user's input and returns the appropriate response based on the command.
+     *
+     * @param input The user's input string containing a command.
+     * @return The response message to be displayed.
+     */
     public String getResponse(String input) {
         try {
             String[] parts = input.split(" ", 2);

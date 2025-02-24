@@ -9,12 +9,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for Kiwi using FXML.
  */
 public class Main extends Application {
 
     private Kiwi kiwiChatbot = new Kiwi("./data/kiwi.txt");
 
+    /**
+     * Starts the JavaFX application, loading the main window from an FXML file.
+     * The method sets up the primary stage, injects the Kiwi chatbot into the controller,
+     * and displays the user interface.
+     *
+     * @param stage The primary stage for this JavaFX application.
+     */
     @Override
     public void start(Stage stage) {
         try {
