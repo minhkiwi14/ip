@@ -147,7 +147,10 @@ public class Storage {
      */
     public void save(ArrayList<Task> tasks) throws KiwiException {
         try {
-            FileWriter writer = new FileWriter(filePath);
+            File file = new File(filePath);
+            // Create parent directories if they don't exist
+            file.getParentFile().mkdirs();  // <-- Add this line
+            FileWriter writer = new FileWriter(file);
             for (Task task : tasks) {
                 writer.write(task.toFileFormat() + "\n");
             }
