@@ -1,5 +1,7 @@
 package kiwi;
 
+import java.util.Map;
+
 import kiwi.command.Parser;
 import kiwi.command.TaskList;
 import kiwi.exception.KiwiException;
@@ -9,8 +11,6 @@ import kiwi.task.Event;
 import kiwi.task.Task;
 import kiwi.task.Todo;
 import kiwi.ui.Ui;
-
-import java.util.Map;
 
 /**
  * The Kiwi class represents the main controller for the Kiwi task management application.

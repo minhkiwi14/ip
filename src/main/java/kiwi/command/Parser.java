@@ -1,11 +1,11 @@
 package kiwi.command;
 
-import kiwi.exception.KiwiException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import kiwi.exception.KiwiException;
 
 /**
  * Provides utility methods for parsing user input arguments into specific components required by the application.
@@ -89,7 +89,8 @@ public class Parser {
         String[] parts = arguments.split("\\s+/(desc|by|from|to)\\s+", -1);
 
         if (parts.length < 1) {
-            throw new KiwiException("Invalid edit format! Use: edit <index> [/desc ...] [/by ...] [/from ...] [/to ...]");
+            throw new KiwiException("Invalid edit format!"
+                    + "Use: edit <index> [/desc ...] [/by ...] [/from ...] [/to ...]");
         }
 
         try {

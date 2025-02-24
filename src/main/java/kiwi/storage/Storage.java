@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,17 +19,17 @@ import kiwi.task.Todo;
  * suitable for later reconstruction.
  */
 public class Storage {
-    private final String filePath;
-
-    private static final int MIN_TODO_PARTS = 3;
-    private static final int MIN_DEADLINE_PARTS = 4;
-    private static final int MIN_EVENT_PARTS = 5;
-
     private static final String TASK_TYPE_TODO = "T";
     private static final String TASK_TYPE_DEADLINE = "D";
     private static final String TASK_TYPE_EVENT = "E";
 
     private static final String TASK_COMPLETED = "1";
+
+    private static final int MIN_TODO_PARTS = 3;
+    private static final int MIN_DEADLINE_PARTS = 4;
+    private static final int MIN_EVENT_PARTS = 5;
+
+    private final String filePath;
 
     /**
      * Creates a Storage instance associated with the specified file path.
@@ -96,10 +95,10 @@ public class Storage {
         String description = parts[2];
 
         Task task = switch (type) {
-            case TASK_TYPE_TODO -> parseTodo(description);
-            case TASK_TYPE_DEADLINE -> parseDeadline(parts);
-            case TASK_TYPE_EVENT -> parseEvent(parts);
-            default -> null;
+        case TASK_TYPE_TODO -> parseTodo(description);
+        case TASK_TYPE_DEADLINE -> parseDeadline(parts);
+        case TASK_TYPE_EVENT -> parseEvent(parts);
+        default -> null;
         };
 
         if (task != null && isDone) {
@@ -148,8 +147,7 @@ public class Storage {
     public void save(ArrayList<Task> tasks) throws KiwiException {
         try {
             File file = new File(filePath);
-            // Create parent directories if they don't exist
-            file.getParentFile().mkdirs();  // <-- Add this line
+            file.getParentFile().mkdirs();
             FileWriter writer = new FileWriter(file);
             for (Task task : tasks) {
                 writer.write(task.toFileFormat() + "\n");
