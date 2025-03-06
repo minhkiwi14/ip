@@ -62,6 +62,7 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
         if (response.contains("Bye. Hope to see you again soon!")) {
+            // Solution below adapted from https://github.com/nus-cs2103-AY2425S2/forum/issues/160
             new Timer(true).schedule(new TimerTask() {
                 public void run() {
                     Platform.exit();
