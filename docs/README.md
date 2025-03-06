@@ -18,7 +18,8 @@ add, edit, delete, and search tasks to stay organized!
     - [Deleting Tasks](#deleting-tasks)
     - [Finding Tasks](#finding-tasks)
     - [Editing Tasks](#editing-tasks)
-    - [Saving and Exiting](#saving-and-exiting)
+    - [Saving](#saving)
+    - [Exiting](#exiting)
 
 ## Quick Start
 
@@ -102,11 +103,11 @@ Edits an existing task based on its index.
 - Example:
   `edit 2 /desc Complete project proposal`
 
-## Saving
+### Saving
 
 Kiwi automatically saves your tasks to disk after every change. 
 
-## Exiting
+### Exiting
 
 Displays the goodbye message and quits the program after 3 seconds.
 
