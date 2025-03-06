@@ -1,8 +1,12 @@
 package kiwi.task;
 
+import kiwi.exception.KiwiException;
+
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
 /**
@@ -21,16 +25,18 @@ public class Deadline extends Task {
      * @param description Task description
      * @param by          Combined date and optional time string (e.g., "2023-10-10 15:00")
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, String by) throws KiwiException {
         super(description);
-        String[] dateTimeParts = by.split(" ", 2);
-        this.date = LocalDate.parse(dateTimeParts[0]);
+        try {
+            String[] dateTimeParts = by.split(" ", 2);
+            this.date = LocalDate.parse(dateTimeParts[0]);
 
-        // Solution adapted from ChatGPT with the prompt:
-        // "How to handle the case where time is missing?"
-        this.time = dateTimeParts.length > 1
-                ? LocalTime.parse(dateTimeParts[1])
-                : LocalTime.of(23, 59);
+            this.time = dateTimeParts.length > 1
+                    ? LocalTime.parse(dateTimeParts[1])
+                    : LocalTime.of(23, 59);
+        } catch (DateTimeParseException e) {
+            throw new KiwiException("Invalid date/time format. Expected format: yyyy-MM-dd [HH:mm]");
+        }
     }
 
     /**

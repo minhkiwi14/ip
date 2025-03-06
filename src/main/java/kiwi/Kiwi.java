@@ -1,5 +1,6 @@
 package kiwi;
 
+import java.time.format.DateTimeParseException;
 import java.util.Map;
 
 import kiwi.command.Parser;
@@ -137,18 +138,26 @@ public class Kiwi {
 
     private String handleDeadline(String arguments) throws KiwiException {
         String[] parts = Parser.parseDeadlineArgs(arguments);
-        Task task = new Deadline(parts[0], parts[1]);
-        tasks.addTask(task);
-        storage.save(tasks.getAllTasks());
-        return ui.showAddMessage(task, tasks.size());
+        try {
+            Task task = new Deadline(parts[0], parts[1]);
+            tasks.addTask(task);
+            storage.save(tasks.getAllTasks());
+            return ui.showAddMessage(task, tasks.size());
+        } catch (DateTimeParseException e) {
+            throw new KiwiException("Invalid date/time format! Use: deadline <description> /by <YYYY-MM-DD HH:mm>");
+        }
     }
 
     private String handleEvent(String arguments) throws KiwiException {
         String[] parts = Parser.parseEventArgs(arguments);
-        Task task = new Event(parts[0], parts[1], parts[2]);
-        tasks.addTask(task);
-        storage.save(tasks.getAllTasks());
-        return ui.showAddMessage(task, tasks.size());
+        try {
+            Task task = new Deadline(parts[0], parts[1]);
+            tasks.addTask(task);
+            storage.save(tasks.getAllTasks());
+            return ui.showAddMessage(task, tasks.size());
+        } catch (KiwiException e) {
+            throw new KiwiException("Invalid date/time format! Use: deadline <description> /by <YYYY-MM-DD HH:mm>");
+        }
     }
 
     private String handleFind(String arguments) throws KiwiException {
