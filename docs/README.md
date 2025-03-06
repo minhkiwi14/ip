@@ -102,8 +102,12 @@ Edits an existing task based on its index.
 - Example:
   `edit 2 /desc Complete project proposal`
 
-## Saving and Exiting
+## Saving
 
-Kiwi automatically saves your tasks to disk after every change. To exit the program:
+Kiwi automatically saves your tasks to disk after every change. 
+
+## Exiting
+
+Displays the goodbye message and quits the program after 3 seconds.
 
 - Format: `bye`
