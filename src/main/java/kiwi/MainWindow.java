@@ -1,5 +1,9 @@
 package kiwi;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -58,7 +62,11 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
         if (response.contains("Bye. Hope to see you again soon!")) {
-            javafx.application.Platform.exit();
+            new Timer(true).schedule(new TimerTask() {
+                public void run() {
+                    Platform.exit();
+                }
+            }, 3000);
         }
     }
 }
